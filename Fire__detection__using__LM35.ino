@@ -1,64 +1,27 @@
-#define buzzer_PIN D5;
-
-int LED = 12;
-
-#define LM35_PIN A2;
-
-int FIRE_detected;
-
-
-void setup()
-
-{
-
+void setup() {
+  
   Serial.begin(9600);
-
-  pinMode(5, OUTPUT);
-
-  pinMode(LED, OUTPUT);
-
-  pinMode(A2, INPUT);
-
 }
 
+void loop() {
+  
+  int analogValue = analogRead(A1);
 
-void loop()
+  Serial.print("Analog reading: ");
+  Serial.print(analogValue);   
 
-{
-
-  FIRE_detected = analogRead(A2);
-
-  if (FIRE_detected == 1)
-
-  {
-
-    Serial.println("FIRE_detected");
-
-    digitalWrite(5, HIGH);
-
-    digitalWrite(LED, HIGH);
-
-    delay(200);
-     digitalWrite(5, LOW);
-    digitalWrite(LED, LOW);
-
-    delay(200);
-
+  
+  if (analogValue < 10) {
+    Serial.println(" - Dark");
+  } else if (analogValue < 200) {
+    Serial.println(" - Dim");
+  } else if (analogValue < 500) {
+    Serial.println(" - Light");
+  } else if (analogValue < 800) {
+    Serial.println(" - Bright");
+  } else {
+    Serial.println(" - Very bright");
   }
 
-  else
-
-  {
-
-    Serial.println("NO FIRE_detected");
-
-    digitalWrite(5, LOW);
-
-    digitalWrite(LED, LOW);
-
-  }
-
-  delay(1000);
-
+  delay(500);
 }
-
